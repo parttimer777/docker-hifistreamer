@@ -1,0 +1,25 @@
+#!/usr/bin/with-contenv bash
+
+set -o nounset
+
+err=""
+
+if [[ -z "$(find /plexamp-data/.local/share/Plexamp/Settings -type f -name *uuid*)" 
+		&& -z "${PLEXAMP_CLAIM_TOKEN:-}" ]]; then
+	err=$err"PLEXAMP_CLAIM_TOKEN"
+fi
+
+if [ -z "${DEVICE_NAME:-}" ]; then
+	err=$err"DEVICE_NAME"
+fi
+
+if [ -n "$err" ]; then
+	echo "Missing env variable(s): $err"
+	exit 1
+fi
+
+# usermod -a -G audio abc
+# chown -R abc:abc /plexamp-data
+
+# set alsa volume
+amixer set Master 90%

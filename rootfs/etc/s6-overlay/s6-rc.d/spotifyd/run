@@ -1,0 +1,5 @@
+#!/usr/bin/with-contenv bash
+
+echo "**** starting spotifyd *****"
+# exec s6-setuidgid abc /app/spotifyd --no-daemon --device-name $DEVICE_NAME -p $SPOTIFY_PASSWORD -u $SPOTIFY_USER
+/app/spotifyd --no-daemon --device-name $DEVICE_NAME -p $SPOTIFY_PASSWORD -u $SPOTIFY_USER
