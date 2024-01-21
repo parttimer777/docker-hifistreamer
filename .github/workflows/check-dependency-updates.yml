@@ -29,10 +29,10 @@ jobs:
         [ "$?" -ne "0" ] && exit 3
 
         echo "$plexampVersion|$spotifydVersion|$baseimageHash" 
-        jq -n --arg plexampVersion "$plexampVersion" --arg spotifydVersion "$spotifydVersion" --arg baseimageHash "$baseimageHash" \
-          '{
-            $ARGS.named
-            }' > versions.json
+        jq -n --arg plexampVersion "$plexampVersion" \
+          --arg spotifydVersion "$spotifydVersion" \
+          --arg baseimageHash "$baseimageHash" \
+          '$ARGS.named' > versions.json
             
         git config user.name 'github-actions[bot]'
         git config user.email 'github-actions[bot]@users.noreply.github.com'
