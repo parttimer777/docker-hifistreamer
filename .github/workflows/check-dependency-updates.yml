@@ -31,9 +31,7 @@ jobs:
         echo "$plexampVersion|$spotifydVersion|$baseimageHash" 
         jq -n --arg plexampVersion "$plexampVersion" --arg spotifydVersion "$spotifydVersion" --arg baseimageHash "$baseimageHash" \
           '{
-            plexampVersion: $ARGS.plexampVersion, 
-            spotifydVersion: $ARGS.spotifydVersion, 
-            baseimageHash: $ARGS.baseimageHash
+            $ARGS.named
             }' > versions.json
             
         git config user.name 'github-actions[bot]'
