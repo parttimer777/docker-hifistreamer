@@ -20,7 +20,9 @@ jobs:
         USER_IMAGE=linuxserver/baseimage-debian
         
         plexampVersion=$(curl -s "https://plexamp.plex.tv/headless/version.json" | jq -r '.latestVersion')
-        spotifydVersion=$(curl -s "https://api.github.com/repos/Spotifyd/spotifyd/releases/latest" | jq '.tag_name')
-        baseimageVersion=$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" "https://ghcr.io/v2/${USER_IMAGE}/manifests/amd64-bookworm" | jq -r '.config.digest')
+        spotifydVersion=$(curl -s "https://api.github.com/repos/Spotifyd/spotifyd/releases/latest" | jq -r '.tag_name')
 
-        echo "$plexampVersion|$spotifydVersion|$baseimageVersion"
+        token=$(curl -s "https://ghcr.io/token?scope=repository:${USER_IMAGE}:pull" | jq -r '.token')
+        baseimageHash=$(curl -s -H "Authorization: Bearer $token" "https://ghcr.io/v2/${USER_IMAGE}/manifests/amd64-bookworm" | jq -r '.config.digest')
+
+        echo "$plexampVersion|$spotifydVersion|$baseimageHash"
