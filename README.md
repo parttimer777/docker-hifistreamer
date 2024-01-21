@@ -1,5 +1,15 @@
 # docker-hifistreamer
 
+Docker-hifistreamer is for audio enthusiasts that want to stream music through DAC/AMPs and HiFi headphones.
+* Plexamp - use Plexamp on your phone as remote to play your Plex lossless audio collection
+* Spotifyd - cast Spotify through your HiFi headphones
+* Built with s6 overlay, allowing custom startup scripts and services
+* Image is automatically updated and built
+
+AMD64 only for now.
+
+Based on linuxserver's [Debian BaseImage](https://github.com/linuxserver/docker-baseimage-debian). 
+
 ```
 version: '3'
 
