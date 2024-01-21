@@ -5,7 +5,7 @@ echo "**** starting plexamp *****"
 export PLEXAMP_PLAYER_NAME="${DEVICE_NAME}"
 export HOME=/plexamp-data 
 
-node /app/plexamp/js/index.js
+exec node /app/plexamp/js/index.js
 
 # exec s6-setuidgid abc bash -c 'HOME=/plexamp-data node /app/plexamp/js/index.js'
 # exec node /app/plexamp/js/index.js
