@@ -1,0 +1,25 @@
+name: Check Dependency Updates
+
+on:
+  schedule:
+    - cron: "0 0,12 * * *"
+    
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+      
+    steps:
+    - uses: actions/checkout@v3
+    - name: Check Deps
+      run: |
+        USER_IMAGE=linuxserver/baseimage-debian
+        
+        plexampVersion=$(curl -s "https://plexamp.plex.tv/headless/version.json" | jq -r '.latestVersion')
+        spotifydVersion=$(curl -s "https://api.github.com/repos/Spotifyd/spotifyd/releases/latest" | jq '.tag_name')
+        baseimageVersion=$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" "https://ghcr.io/v2/${USER_IMAGE}/manifests/amd64-bookworm" | jq -r '.config.digest')
+
+        echo "$plexampVersion|$spotifydVersion|$baseimageVersion"
