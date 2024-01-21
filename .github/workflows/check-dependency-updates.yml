@@ -34,6 +34,9 @@ jobs:
             spotifydVersion: $ARGS.spotifydVersion, 
             baseimageHash: $ARGS.baseimageHash
             }' > versions.json
-        git add .
+            
+        git config user.name "GitHub Actions Bot"
+        git config user.email "<>"
+        git add versions.json
         git commit -m "Version updates" .
         git push
