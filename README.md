@@ -41,7 +41,7 @@ services:
     - PLEXAMP_CLAIM_TOKEN=${PLEXAMP_CLAIM_TOKEN:?err}
     - SPOTIFY_USER=${SPOTIFY_USER:?err}
   volumes: 
-    - /work/data/hifistreamer/plexamp:/plexamp-data
+    - ./plexamp-data:/plexamp-data
   restart: unless-stopped
   secrets:
     - spotify
