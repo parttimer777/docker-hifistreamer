@@ -46,7 +46,7 @@ RUN \
 WORKDIR /app
 
 # source: https://github.com/anatosun/plexamp-docker/blob/main/Dockerfile
-RUN wget -q "$(curl -s "https://plexamp.plex.tv/headless/version$1.json" | jq -r '.updateUrl')" -O plexamp.tar.bz2 \
+RUN wget -q "$(curl -s "https://plexamp.plex.tv/headless/version.json" | jq -r '.updateUrl')" -O plexamp.tar.bz2 \
 	&& tar -xvf plexamp.tar.bz2 \
 	&& rm plexamp.tar.bz2
 
