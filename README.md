@@ -42,6 +42,8 @@ services:
     - SPOTIFY_USER=${SPOTIFY_USER:?err}
   volumes: 
     - ./plexamp-data:/plexamp-data
+    # Configure alsa to output sound to USB DAC
+    #- ./asound.conf:/etc/asound.conf
   restart: unless-stopped
   secrets:
     - spotify
