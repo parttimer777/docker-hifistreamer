@@ -35,8 +35,8 @@ jobs:
             baseimageHash: $ARGS.baseimageHash
             }' > versions.json
             
-        git config user.name "GitHub Actions Bot"
-        git config user.email "<>"
+        git config user.name 'github-actions[bot]'
+        git config user.email 'github-actions[bot]@users.noreply.github.com'
         git add versions.json
         git commit -m "Version updates" .
         git push
