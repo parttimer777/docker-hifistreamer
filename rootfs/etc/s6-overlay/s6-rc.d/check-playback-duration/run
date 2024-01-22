@@ -2,26 +2,30 @@
 
 echo "**** checking playback duration ****"
 
-card=$(cat /etc/asound.conf |grep pcm|cut -d' ' -f2)
+card=$(cat /etc/asound.conf|grep pcm|cut -d' ' -f2)
 status_path=$(find /proc/asound/card${card:-0} -type f -name status|head -n1)
 if [ ! "$status_path" ]; then
     echo "Couldn't find status file in /proc/asound/card${card:-0}. Check if asound.conf is configured"
     exit 1
 fi
 
-max_diff=$((${MAX_PLAYBACK_DURATION:-60}*60))
+max_duration=$((${MAX_PLAYBACK_DURATION:-60}*60))
 while true
 do
     output="$(cat $status_path)"
     start="$(echo "$output"|grep trigger_time|cut -d: -f2|cut -d. -f1)"
     now="$(echo "$output"|grep tstamp|cut -d: -f2|cut -d. -f1)"
-    diff=$((now - start))
+    duration=$((now - start))
+    pid=$(echo "$output" | grep owner_pid | cut -d: -f2)
 
-    echo "**** Stream was playing for $diff sec ****"
-    echo "$output"
+    if [ "$pid" ]; then
+        echo "**** Stream (pid=$pid) was playing for ${diff}s ****"
+    else
+        echo "**** No active alsa streams ****"
+    fi
 
-    if [ "$diff" -gt "$max_diff" ]; then
-        echo "Restarting music services.."
+    if [ "$duration" -gt "$max_duration" ]; then
+        echo "Playback exceeded max playback duration (${MAX_PLAYBACK_DURATION}m). Restarting music services.."
         s6-svc -r /run/service/plexamp
         s6-svc -r /run/service/spotifyd
     fi
