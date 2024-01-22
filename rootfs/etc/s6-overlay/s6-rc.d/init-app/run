@@ -23,3 +23,6 @@ fi
 
 # set alsa volume
 amixer set Master 90%
+
+# delete state file, clears anything in the queue, prevents plexamp from opening a connection to the sound system and triggering my DAC to turn on
+rm /plexamp-data/.local/share/Plexamp/Settings/%40Plexamp%3Astate
