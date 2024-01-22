@@ -21,8 +21,9 @@ do
     echo "$output"
 
     if [ "$diff" -gt "$max_diff" ]; then
-        echo "Restarting plexamp.."
+        echo "Restarting music services.."
         s6-svc -r /run/service/plexamp
+        s6-svc -r /run/service/spotifyd
     fi
     sleep 300
 done
