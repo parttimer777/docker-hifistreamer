@@ -2,6 +2,11 @@
 
 echo "**** starting plexamp *****"
 
+
+# delete state file which clears any paused tracks.
+# this prevents plexamp from opening a connection to the sound system and triggering a DAC to power on
+rm /plexamp-data/.local/share/Plexamp/Settings/%40Plexamp%3Astate || echo
+
 export PLEXAMP_PLAYER_NAME="${DEVICE_NAME}"
 export HOME=/plexamp-data 
 
@@ -9,3 +14,4 @@ exec node /app/plexamp/js/index.js
 
 # exec s6-setuidgid abc bash -c 'HOME=/plexamp-data node /app/plexamp/js/index.js'
 # exec node /app/plexamp/js/index.js
+
