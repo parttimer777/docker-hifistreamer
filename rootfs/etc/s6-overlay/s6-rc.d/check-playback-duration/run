@@ -5,7 +5,7 @@ echo "**** checking playback duration ****"
 card=$(cat /etc/asound.conf|grep pcm|cut -d' ' -f2)
 status_path=$(find /proc/asound/card${card:-0} -type f -name status|head -n1)
 if [ ! "$status_path" ]; then
-    echo "Couldn't find status file in /proc/asound/card${card:-0}. Check if asound.conf is configured"
+    echo "Couldn't find status file in /proc/asound/card${card:-0}. Check if asound.conf is configured and systempaths=unconfined is set."
     exit 1
 fi
 
