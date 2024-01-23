@@ -2,12 +2,12 @@
 
 err=""
 
-if [ ! "$(find /plexamp-data/.local/share/Plexamp/Settings -type f -name *uuid*)" 
-		&& ! "$PLEXAMP_CLAIM_TOKEN" ]; then
+if [[ ! "$(find /plexamp-data/.local/share/Plexamp/Settings -type f -name *uuid*)" \
+		&& ! "$PLEXAMP_CLAIM_TOKEN" ]]; then
 	err=$err"PLEXAMP_CLAIM_TOKEN"
 fi
 
-if [ ! "$DEVICE_NAME1" ]; then
+if [ ! "$DEVICE_NAME" ]; then
 	err=$err"DEVICE_NAME"
 fi
 
