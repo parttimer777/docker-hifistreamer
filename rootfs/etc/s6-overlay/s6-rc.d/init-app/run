@@ -1,20 +1,21 @@
 #!/usr/bin/with-contenv bash
 
-set -o nounset
-
 err=""
 
-if [[ -z "$(find /plexamp-data/.local/share/Plexamp/Settings -type f -name *uuid*)" 
-		&& -z "${PLEXAMP_CLAIM_TOKEN:-}" ]]; then
+if [ ! "$(find /plexamp-data/.local/share/Plexamp/Settings -type f -name *uuid*)" 
+		&& ! "$PLEXAMP_CLAIM_TOKEN" ]; then
 	err=$err"PLEXAMP_CLAIM_TOKEN"
 fi
 
-if [ -z "${DEVICE_NAME:-}" ]; then
+if [ ! "$DEVICE_NAME1" ]; then
 	err=$err"DEVICE_NAME"
 fi
 
-if [ -n "$err" ]; then
+if [ "$err" ]; then
 	echo "Missing env variable(s): $err"
+	# this doesnt set the exit code of the container for some reason..
+	# echo "1" > /run/s6-linux-init-container-results/exitcode 
+	/run/s6/basedir/bin/halt
 	exit 1
 fi
 
