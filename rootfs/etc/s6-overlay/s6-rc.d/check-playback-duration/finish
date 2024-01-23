@@ -1,0 +1,4 @@
+#!/usr/bin/with-contenv bash
+
+# dont restart this service
+exit 125

@@ -2,6 +2,10 @@
 
 echo "**** checking playback duration ****"
 
+if [ ! "$MAX_PLAYBACK_DURATION" ]; then
+    exit 1
+fi
+
 card=$(cat /etc/asound.conf|grep pcm|cut -d' ' -f2)
 card=${card:-0}
 status_path=$(find /proc/asound/card${card} -type f -name status|head -n1)
@@ -10,7 +14,7 @@ if [ ! "$status_path" ]; then
     exit 1
 fi
 
-max_duration=$((${MAX_PLAYBACK_DURATION:-60}*60))
+max_duration=$((MAX_PLAYBACK_DURATION * 60))
 while true
 do
     output="$(cat $status_path)"
@@ -26,7 +30,7 @@ do
     fi
 
     if [ "$duration" -gt "$max_duration" ]; then
-        echo "Playback exceeded max playback duration (${MAX_PLAYBACK_DURATION}m). Restarting music services.."
+        echo "Exceeded max playback duration (${MAX_PLAYBACK_DURATION}m). Restarting music services.."
         s6-svc -r /run/service/plexamp
         s6-svc -r /run/service/spotifyd
     fi

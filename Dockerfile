@@ -53,3 +53,6 @@ RUN wget -q "$(curl -s "https://plexamp.plex.tv/headless/version.json" | jq -r '
 COPY --from=spotifyd-builder /work/spotifyd/target/release/spotifyd /app/spotifyd
 COPY /rootfs /
 # COPY ./asound.conf /etc/asound.conf
+
+HEALTHCHECK --interval=15s \
+    CMD [ $(s6-rc -a list|grep -v grep|egrep "plexamp|spotifyd"|wc -l) -eq 2 ]
