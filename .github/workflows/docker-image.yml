@@ -35,13 +35,13 @@ jobs:
       id: buildx
       uses: crazy-max/ghaction-docker-buildx@v1
       with:
-        version: latest
+        buildx-version: latest
 
     - name: Build the image
       run: |
         docker buildx build \
           --tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest \
-          --platform linux/amd64,linux/arm64 
+          --platform linux/amd64,linux/arm64 .
     # - name: Build and push Docker image
     #   uses: docker/build-push-action@v5.1.0
     #   with:
