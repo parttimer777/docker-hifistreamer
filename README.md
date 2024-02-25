@@ -5,8 +5,8 @@ Docker-hifistreamer is for audio enthusiasts that want to stream music through D
 * Spotifyd - cast Spotify through your HiFi headphones
 * Built with s6 overlay, allowing custom startup scripts and services
 * Image is automatically updated and built
+* Supports amd64 & arm64
 
-AMD64 only for now.
 
 Based on linuxserver's [Debian BaseImage](https://github.com/linuxserver/docker-baseimage-debian). 
 
