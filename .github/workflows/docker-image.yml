@@ -39,11 +39,10 @@ jobs:
 
     - name: Build and push Docker image
       run: |
-        docker buildx build \
+        docker buildx build --push \
           --tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest \
           --platform linux/amd64,linux/arm64 .
 
-        docker image push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
     # - name: Build and push Docker image
     #   uses: docker/build-push-action@v5.1.0
     #   with:
