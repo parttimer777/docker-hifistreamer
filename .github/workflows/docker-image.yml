@@ -31,10 +31,20 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
 
-
-    - name: Build and push Docker image
-      uses: docker/build-push-action@v5.1.0
+    - name: Install buildx
+      id: buildx
+      uses: crazy-max/ghaction-docker-buildx@v1
       with:
-        context: .
-        push: true
-        tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+        version: latest
+
+    - name: Build the image
+      run: |
+        docker buildx build \
+          --tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest \
+          --platform linux/amd64,linux/arm64 
+    # - name: Build and push Docker image
+    #   uses: docker/build-push-action@v5.1.0
+    #   with:
+    #     context: .
+    #     push: true
+    #     tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
