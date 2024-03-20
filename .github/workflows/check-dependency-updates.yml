@@ -10,13 +10,16 @@ env:
   IMAGE_NAME: ${{ github.repository }}
   
 jobs:
-  build:
+  check-updates:
     runs-on: ubuntu-latest
+    outputs:
+      out-of-date: ${{ steps.check-updates.outputs.out-of-date }}
     permissions:
       contents: write
     steps:
     - uses: actions/checkout@v3
-    - name: Check Deps
+    - name: Check Updates
+      id: check-updates
       run: |
         USER_IMAGE=linuxserver/baseimage-debian
         
@@ -41,4 +44,15 @@ jobs:
           git add versions.json
           git commit -m "Version updates" .
           git push
+          # pushes by github-actions[bot] wont trigger subsequent builds as per https://docs.github.com/en/actions/security-guides/automatic-token-authentication#using-the-github_token-in-a-workflow
+          # so we do it explicitly
+          echo "out-of-date=true" >> "$GITHUB_OUTPUT"
         fi
+    
+  build-docker-image:
+    permissions:
+      contents: read
+      packages: write
+    if: needs.check-updates.out-of-date == 'true'
+    needs: [check-updates]
+    uses: parttimer777/docker-hifistreamer/.github/workflows/docker-image.yml@main
