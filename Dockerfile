@@ -23,7 +23,7 @@ RUN git clone https://github.com/Spotifyd/spotifyd.git \
     && cargo build --release --no-default-features --features alsa_backend
 
 FROM ghcr.io/linuxserver/baseimage-debian:bookworm 
-COPY --from=node:16-bookworm /usr/local/bin /usr/local/bin
+COPY --from=node:20-bookworm /usr/local/bin /usr/local/bin
 
 RUN \
     echo "**** install packages ****" && \
