@@ -53,6 +53,6 @@ jobs:
     permissions:
       contents: read
       packages: write
-    if: needs.check-updates.out-of-date == 'true'
-    needs: [check-updates]
+    needs: check-updates
+    if: needs.check-updates.outputs.out-of-date == 'true'
     uses: parttimer777/docker-hifistreamer/.github/workflows/docker-image.yml@main
