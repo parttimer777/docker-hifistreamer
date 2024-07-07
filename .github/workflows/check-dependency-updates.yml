@@ -24,18 +24,18 @@ jobs:
         USER_IMAGE=linuxserver/baseimage-debian
         
         plexampVersion=$(curl -s "https://plexamp.plex.tv/headless/version.json" | jq -r '.latestVersion')
-        [[ "$?" -ne "0" || -z "$plexampVersion" ]] \
-          && echo "Error getting plexamp version" \
+        [ -z "$plexampVersion" ] \
+          && echo "Invalid plexamp version: $plexampVersion" \
           && exit 1
         spotifydVersion=$(curl -s "https://api.github.com/repos/Spotifyd/spotifyd/releases/latest" | jq -r '.tag_name')
-        [[ "$?" -ne "0" || -z "$spotifydVersion" ]] \
-          && echo "Error getting spotifyd version" \
-          && exit 2
+        [ -z "$spotifydVersion" ] \
+          && echo "Invalid spotifyd version: $spotifydVersion" \
+          && exit 1
         token=$(curl -s "https://ghcr.io/token?scope=repository:${USER_IMAGE}:pull" | jq -r '.token')
         baseimageHash=$(curl -s -H "Authorization: Bearer $token" "https://ghcr.io/v2/${USER_IMAGE}/manifests/amd64-bookworm" | jq -r '.config.digest')
-        [[ "$?" -ne "0" || -z "$baseimageHash" ]] \
-          && echo "Error getting base image version" \
-          && exit 3
+        [ -z "$baseimageHash" ] \
+          && echo "Invalid base image version: $baseimageHash" \
+          && exit 1
         
 
         echo "$plexampVersion|$spotifydVersion|$baseimageHash" 
