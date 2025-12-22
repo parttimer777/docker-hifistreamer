@@ -1,0 +1,15 @@
+#!/usr/bin/with-contenv bash
+
+echo "**** starting raspotify/librespot *****"
+
+# ENV SPOTIFY_NAME RaspotifySpeaker
+# ENV BACKEND_NAME 'alsa'
+# ENV DEVICE_NAME 'equal'
+# ENV ALSA_SLAVE_PCM 'plughw:0,0'
+# ENV ALSA_SOUND_LEVEL '100%'
+# ENV VERBOSE 'false'
+
+exec /usr/bin/librespot --name "${DEVICE_NAME:-RaspotifySpeaker}" \
+    --backend "${BACKEND_NAME:-alsa}" \
+    --bitrate 320 \
+    --enable-volume-normalisation
