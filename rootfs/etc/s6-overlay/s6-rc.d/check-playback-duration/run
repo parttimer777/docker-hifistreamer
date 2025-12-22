@@ -32,7 +32,7 @@ do
     if [ "$duration" -gt "$max_duration" ]; then
         echo "Exceeded max playback duration (${MAX_PLAYBACK_DURATION}m). Restarting music services.."
         s6-svc -r /run/service/plexamp
-        s6-svc -r /run/service/spotifyd
+        s6-svc -r /run/service/raspotify
     fi
     sleep 300
 done

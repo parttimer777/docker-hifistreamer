@@ -1,23 +1,35 @@
 #!/usr/bin/with-contenv bash
 
-err=""
+missing=""
 
 if [[ ! "$(find /plexamp-data/.local/share/Plexamp/Settings -type f -name *uuid*)" \
 		&& ! "$PLEXAMP_CLAIM_TOKEN" ]]; then
-	err=$err"PLEXAMP_CLAIM_TOKEN"
+	echo "Missing PLEXAMP_CLAIM_TOKEN"
+	missing=1
 fi
 
 if [ ! "$DEVICE_NAME" ]; then
-	err=$err"DEVICE_NAME"
+	echo "Missing DEVICE_NAME"
+	missing=1
 fi
 
-if [ "$err" ]; then
-	echo "Missing env variable(s): $err"
+if [ ! "$ALSA_SLAVE_PCM" ]; then
+	echo "Missing ALSA_SLAVE_PCM"
+	missing=1
+fi
+
+if [ "$missing" ]; then
 	# this doesnt set the exit code of the container for some reason..
 	# echo "1" > /run/s6-linux-init-container-results/exitcode 
 	/run/s6/basedir/bin/halt
 	exit 1
 fi
+
+echo "/etc/asound.conf"
+echo "SLAVE_PCM is $ALSA_SLAVE_PCM"
+envsubst < /etc/asound.conf.sample > /etc/asound.conf
+cat /etc/asound.conf
+echo ''
 
 # usermod -a -G audio abc
 # chown -R abc:abc /plexamp-data

@@ -1,9 +1,0 @@
-#!/usr/bin/with-contenv bash
-
-echo "**** starting spotifyd *****"
-
-password=$(cat /run/secrets/spotify)
-[ ! "$password" ] && echo "error: missing spotify secret. specify spotify password as docker secret" && exit 1
-
-# exec s6-setuidgid abc /app/spotifyd --no-daemon --device-name $DEVICE_NAME -p $SPOTIFY_PASSWORD -u $SPOTIFY_USER
-exec /app/spotifyd --no-daemon --device-name $DEVICE_NAME -p $password -u $SPOTIFY_USER
