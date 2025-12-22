@@ -27,9 +27,9 @@ jobs:
         [ -z "$plexampVersion" ] \
           && echo "Invalid plexamp version: $plexampVersion" \
           && exit 1
-        spotifydVersion=$(curl -s "https://api.github.com/repos/Spotifyd/spotifyd/releases/latest" | jq -r '.tag_name')
-        [ -z "$spotifydVersion" ] \
-          && echo "Invalid spotifyd version: $spotifydVersion" \
+        raspotifyVersion=$(curl -s "https://api.github.com/repos/dtcooper/raspotify/releases/latest" | jq -r '.tag_name')
+        [ -z "$raspotifyVersion" ] \
+          && echo "Invalid raspotify version: $raspotifyVersion" \
           && exit 1
         token=$(curl -s "https://ghcr.io/token?scope=repository:${USER_IMAGE}:pull" | jq -r '.token')
         baseimageHash=$(curl -s -H "Authorization: Bearer $token" "https://ghcr.io/v2/${USER_IMAGE}/manifests/amd64-bookworm" | jq -r '.config.digest')
@@ -38,9 +38,9 @@ jobs:
           && exit 1
         
 
-        echo "$plexampVersion|$spotifydVersion|$baseimageHash" 
+        echo "$plexampVersion|$raspotifyVersion|$baseimageHash" 
         jq -n --arg plexampVersion "$plexampVersion" \
-          --arg spotifydVersion "$spotifydVersion" \
+          --arg raspotifyVersion "$raspotifyVersion" \
           --arg baseimageHash "$baseimageHash" \
           '$ARGS.named' > versions.json
 
