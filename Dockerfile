@@ -35,4 +35,4 @@ ENV ALSA_SLAVE_PCM="11111"
 COPY /rootfs /
 
 HEALTHCHECK --interval=15s \
-    CMD [ $(s6-rc -a list|grep -v grep|egrep "plexamp|librespot"|wc -l) -eq 2 ]
+    CMD [ $(s6-rc -a list|grep -v grep|egrep "plexamp|raspotify"|wc -l) -eq 2 ]
