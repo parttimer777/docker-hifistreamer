@@ -1,5 +1,5 @@
 {
-  "plexampVersion": "4.10.1",
-  "spotifydVersion": "v0.3.5",
-  "baseimageHash": "sha256:6e4fccdd56fb98fd58b102cd52b1ce58fca482352e25c50a5e6ea4d6a8f1ca03"
+  "plexampVersion": "4.12.4",
+  "spotifydVersion": "v0.4.2",
+  "baseimageHash": "null"
 }
